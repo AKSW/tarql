@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
 
+import arq.cmdline.ModContext;
 import org.apache.jena.atlas.io.IndentedWriter;
 import org.apache.jena.atlas.lib.Lib;
 import org.apache.jena.atlas.logging.LogCtl;
@@ -40,6 +41,13 @@ public class tarql extends CmdGeneral {
 	private static Logger LOG = LoggerFactory.getLogger("org.deri.tarql");
 
 	static {
+		JenaSystem.init();
+		LogCtl.setLog4j2();
+		// Turtle 1.1 style: liek SPARQL, not PREFIX, not @prefix.
+		RIOT.getContext().set(RIOT.symTurtleDirectiveStyle, "sparql");
+	}
+
+	static {
 		String version = "Unknown";
 		String date = "Unknown";
 		try {
@@ -55,6 +63,8 @@ public class tarql extends CmdGeneral {
 
 		TarqlQuery.registerFunctions();
 	}
+
+	protected ModContext modContext = new ModContext();
 
 	public static void main(String... args) {
 		new tarql(args).mainRun();
@@ -86,15 +96,12 @@ public class tarql extends CmdGeneral {
 
 	private ExtendedIterator<Triple> resultTripleIterator = NullIterator.instance();
 
-	static {
-	    JenaSystem.init();
-	    LogCtl.setLog4j2();
-	    // Turtle 1.1 style: liek SPARQL, not PREFIX, not @prefix.
-	    RIOT.getContext().set(RIOT.symTurtleDirectiveStyle, "sparql");
-	}
+
 
 	public tarql(String[] args) {
 		super(args);
+
+		addModule(modContext);
 
 		getUsage().startCategory("Output options");
 		add(testQueryArg,     "--test", "Show CONSTRUCT template and first rows only (for query debugging)");

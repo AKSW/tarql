@@ -27,12 +27,24 @@
 
   <properties>
     <java.version>11</java.version>
-    <jena.version>4.5.0</jena.version>
+    <jena.version>4.7.0</jena.version>
     <opencsv.version>4.6</opencsv.version>
+    <ver.graalvm>22.3.1</ver.graalvm>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js</artifactId>
+      <version>${ver.graalvm}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
+      <version>${ver.graalvm}</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
