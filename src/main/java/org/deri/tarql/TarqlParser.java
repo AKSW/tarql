@@ -43,7 +43,7 @@ public class TarqlParser {
 	private boolean seenSelectOrAsk = false;
 
 	public TarqlParser(String filenameOrURL) {
-		this(open(filenameOrURL), null);
+		this(filenameOrURL, null);
 	}
 
 	public TarqlParser(String filenameOrURL, String baseIRI) {
